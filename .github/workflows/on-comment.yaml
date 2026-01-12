@@ -1,0 +1,20 @@
+name: On-Comment
+
+on:
+  pull_request_review_comment:
+    types: [created]
+  issue_comment:
+    types: [created]
+
+jobs:
+  manual_invocation:
+    if: |
+      startsWith(github.event.comment.body, '/approve')
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Run approval on comment
+        run: |
+          echo it runs
