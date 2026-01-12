@@ -2,7 +2,7 @@
 
 set -eux
 
-STATUSES_URL=$(curl https://api.github.com/repos/mozilla/glean/pulls/3371 | jq -r .statuses_url)
+STATUSES_URL=$(curl "https://api.github.com/repos/badboy/test-repo/pulls/${PR_NUMBER}" | jq -r .statuses_url)
 curl "$STATUSES_URL" > statuses.json
 cat statuses.json
 
