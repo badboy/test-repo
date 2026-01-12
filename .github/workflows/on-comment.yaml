@@ -26,5 +26,6 @@ jobs:
           echo number $NUMBER
           echo pr $PR
           echo ref_name $REF_NAME
+          echo GITHUB_REF $GITHUB_REF
 
           .github/workflows/on-comment.sh
