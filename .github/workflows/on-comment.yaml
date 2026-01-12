@@ -24,6 +24,6 @@ jobs:
         run: |
           set -x
 
-          curl https://api.github.com/repos/badboy/test-repo/collaborators/${actor}/permission
+          curl https://api.github.com/repos/badboy/test-repo/collaborators/${ACTOR}/permission
 
           .github/workflows/on-comment.sh
