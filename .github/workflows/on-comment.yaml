@@ -19,6 +19,7 @@ jobs:
       - name: Run approval on comment
         env:
           PR_NUMBER: ${{ github.event.issue.number }}
+          CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
         run: |
           set -x
 
