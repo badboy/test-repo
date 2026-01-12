@@ -2,7 +2,7 @@
 
 set -eux
 
-permission=$(gh api /repos/badboy/test-repo/collaborators/${ACTOR}/permission | jq .permission)
+permission=$(gh api /repos/badboy/test-repo/collaborators/${ACTOR}/permission | jq -r .permission)
 if [[ "$permission" = "admin" ]] || [[ "$permission" = "write" ]]; then
   true
 else
