@@ -16,5 +16,15 @@ jobs:
       contents: read
     steps:
       - name: Run approval on comment
+        env:
+          NUMBER: ${{ github.event.number }}
+          PR: ${{ github.event.pull_request.number }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           echo it runs
+
+          echo number $NUMBER
+          echo pr $PR
+          echo ref_name $REF_NAME
+
+          .github/workflows/on-comment.sh
