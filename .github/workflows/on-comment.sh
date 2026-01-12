@@ -2,6 +2,14 @@
 
 set -eux
 
+permission=$(gh api /repos/badboy/test-repo/collaborators/${ACTOR}/permission | jq .permission)
+if [[ "$permission" == "admin" -o "$permission" == "write" ]]; then
+  true
+else
+  echo "User without permission. Ignoring."
+  exit 0
+fi
+
 statuses_url=$(gh api "/repos/badboy/test-repo/pulls/${PR_NUMBER}" | jq -r .statuses_url)
 curl "$statuses_url" > statuses.json
 
