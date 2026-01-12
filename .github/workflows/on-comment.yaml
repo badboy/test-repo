@@ -20,11 +20,10 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.issue.number }}
           CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
+          ACTOR: ${{ github.actor }}
         run: |
           set -x
 
-          echo actor ${{ github.actor }}
-          echo actor_id ${{ github.actor_id }}
-          echo triggering_actor ${{ github.triggering_actor }}
+          curl https://api.github.com/repos/badboy/test-repo/collaborators/${actor}/permission
 
           .github/workflows/on-comment.sh
