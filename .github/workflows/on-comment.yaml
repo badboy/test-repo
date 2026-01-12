@@ -9,7 +9,7 @@ on:
 jobs:
   manual_invocation:
     if: |
-      startsWith(github.event.comment.body, '/approve')
+      github.event.issue.pull_request && startsWith(github.event.comment.body, '/approve')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -18,18 +18,8 @@ jobs:
       - uses: actions/checkout@v6
       - name: Run approval on comment
         env:
-          NUMBER: ${{ github.event.number }}
-          PR: ${{ github.event.pull_request.number }}
-          REF_NAME: ${{ github.ref_name }}
-          ISSUE: ${{ github.event.issue.number }}
+          PR_NUMBER: ${{ github.event.issue.number }}
         run: |
           set -x
-          echo it runs
-
-          echo number $NUMBER
-          echo pr $PR
-          echo ref_name $REF_NAME
-          echo GITHUB_REF $GITHUB_REF
-          echo issue $ISSUE
 
           .github/workflows/on-comment.sh
