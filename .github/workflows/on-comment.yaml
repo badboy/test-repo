@@ -23,4 +23,8 @@ jobs:
         run: |
           set -x
 
+          echo actor ${{ github.actor }}
+          echo actor_id ${{ github.actor_id }}
+          echo triggering_actor ${{ github.triggering_actor }}
+
           .github/workflows/on-comment.sh
