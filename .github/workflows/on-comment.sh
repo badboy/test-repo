@@ -2,7 +2,7 @@
 
 set -eux
 
-statuses_url=$(curl "https://api.github.com/repos/badboy/test-repo/pulls/${PR_NUMBER}" | jq -r .statuses_url)
+statuses_url=$(gh api "/repos/badboy/test-repo/pulls/${PR_NUMBER}" | jq -r .statuses_url)
 curl "$statuses_url" > statuses.json
 
 workflow_url=$(<statuses.json jq '.[] | select(.state=="pending" and .context=="ci/circleci: ci/hold") | .target_url' -r | uniq)
