@@ -3,7 +3,7 @@
 set -eux
 
 permission=$(gh api /repos/badboy/test-repo/collaborators/${ACTOR}/permission | jq .permission)
-if [[ "$permission" = "admin" -o "$permission" = "write" ]]; then
+if [[ "$permission" = "admin" ]] || [[ "$permission" = "write" ]]; then
   true
 else
   echo "User without permission. Ignoring."
