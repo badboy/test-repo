@@ -22,6 +22,7 @@ jobs:
           PR_NUMBER: ${{ github.event.issue.number }}
           ACTOR: ${{ github.actor }}
         run: |
+          set -x
           permission=$(gh api /repos/badboy/test-repo/collaborators/${ACTOR}/permission | jq -r .permission)
           if [[ "$permission" = "admin" ]] || [[ "$permission" = "write" ]]; then
             true
