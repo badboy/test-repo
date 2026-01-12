@@ -31,7 +31,7 @@ jobs:
           fi
 
           statuses_url=$(gh api "/repos/badboy/test-repo/pulls/${PR_NUMBER}" | jq -r .statuses_url)
-          curl "$statuses_url" > statuses.json
+          curl --no-progress-meter "$statuses_url" > statuses.json
 
           workflow_url=$(<statuses.json jq '.[] | select(.state=="pending" and .context=="ci/circleci: ci/hold") | .target_url' -r | uniq)
           workflow_id=$(echo "$workflow_url" | cut -d'/' -f 5)
@@ -42,7 +42,7 @@ jobs:
             exit 0
           fi
 
-          job_id=$(curl --request GET \
+          job_id=$(curl --no-progress-meter --fail-with-body --request GET \
             "https://circleci.com/api/v2/workflow/$workflow_id/job" \
             --header "Circle-Token: $CIRCLE_TOKEN" | jq -r '.items[] | select(.name=="hold" and .status=="on_hold") | .id')
 
@@ -52,6 +52,6 @@ jobs:
           fi
 
           echo "Approving job with job ID $job_id"
-          curl --request POST \
+          curl --no-progress-meter --fail-with-body --request POST \
             "https://circleci.com/api/v2/workflow/$workflow_id/approve/$job_id" \
             --header "Circle-Token: $CIRCLE_TOKEN"
