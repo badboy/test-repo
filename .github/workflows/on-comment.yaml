@@ -21,12 +21,17 @@ jobs:
           NUMBER: ${{ github.event.number }}
           PR: ${{ github.event.pull_request.number }}
           REF_NAME: ${{ github.ref_name }}
+          ISSUE: ${{ github.event.issue.number }}
+          IS_PR: ${{ github.event.issue.pull_request }}
         run: |
+          set -x
           echo it runs
 
           echo number $NUMBER
           echo pr $PR
           echo ref_name $REF_NAME
           echo GITHUB_REF $GITHUB_REF
+          echo issue $ISSUE
+          echo is_pr $IS_PR
 
           .github/workflows/on-comment.sh
