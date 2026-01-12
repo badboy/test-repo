@@ -18,9 +18,13 @@ fi
 job_id=$(curl --request GET \
   "https://circleci.com/api/v2/workflow/$workflow_id/job" \
   --header "Circle-Token: $CIRCLE_TOKEN" | jq -r '.items[] | select(.name=="hold" and .status=="on_hold") | .id')
-echo "Job ID: $job_id"
 
 if [[ -z "$job_id" ]]; then
   echo "job ID is missing"
   exit 0
 fi
+
+echo "Approving job with job ID $job_id"
+curl --request POST \
+  "https://circleci.com/api/v2/workflow/$workflow_id/approve/$job_id" \
+  --header "Circle-Token: $CIRCLE_TOKEN"
