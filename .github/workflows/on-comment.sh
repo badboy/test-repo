@@ -10,7 +10,7 @@ workflow_url=$(<statuses.json jq '.[] | select(.state=="pending" and .context=="
 workflow_id=$(echo "$workflow_url" | cut -d'/' -f 5)
 echo "Workflow ID: $workflow_id"
 
-if [[ -n "$workflow_id" ]]; then
+if [[ -z "$workflow_id" ]]; then
   echo "workflow ID is missing"
   exit 0
 fi
@@ -20,7 +20,7 @@ job_id=$(curl --request GET \
   --header "Circle-Token: $CIRCLE_TOKEN" | jq -r '.items[] | select(.name=="hold" and .status=="on_hold") | .id')
 echo "Job ID: $job_id"
 
-if [[ -n "$job_id" ]]; then
+if [[ -z "$job_id" ]]; then
   echo "job ID is missing"
   exit 0
 fi
