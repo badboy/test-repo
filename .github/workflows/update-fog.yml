@@ -8,10 +8,6 @@
 
 name: "Update FOG"
 
-permissions:
-  contents: write
-  pull-requests: write
-
 on:
   workflow_dispatch:
 
@@ -32,6 +28,6 @@ jobs:
       id: fog-updater
       if: github.repository == 'badboy/test-repo'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       run: |
         uv run --project fog-updater fog-updater
