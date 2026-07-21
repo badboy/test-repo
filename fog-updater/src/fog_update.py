@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/
 
-from github import Github, GithubException, InputGitAuthor, enable_console_debug_logging
+from github import Github, Auth, GithubException, InputGitAuthor, enable_console_debug_logging
 import datetime
 import difflib
 import io
@@ -120,7 +120,7 @@ if __name__ == "__main__":
         print("No GITHUB_TOKEN set. Exiting.")
         sys.exit(1)
 
-    github = Github(auth=github.Auth.Token(github_access_token))
+    github = Github(auth=Auth.Token(github_access_token))
     if github.get_user() is None:
         print("Could not get authenticated user. Exiting.")
         sys.exit(1)
