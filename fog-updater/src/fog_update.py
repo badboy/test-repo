@@ -120,7 +120,7 @@ if __name__ == "__main__":
         print("No GITHUB_TOKEN set. Exiting.")
         sys.exit(1)
 
-    github = Github(github_access_token)
+    github = Github(auth=github.Auth.Token(github_access_token))
     if github.get_user() is None:
         print("Could not get authenticated user. Exiting.")
         sys.exit(1)
