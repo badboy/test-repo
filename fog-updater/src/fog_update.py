@@ -15,6 +15,7 @@ import sys
 DEFAULT_ORGANIZATION = "mozilla"
 DEFAULT_AUTHOR_NAME = "data-updater"
 DEFAULT_AUTHOR_EMAIL = "telemetry-alerts@mozilla.com"
+INDEX_URL = "https://raw.githubusercontent.com/mozilla-firefox/firefox/main/toolkit/components/glean/metrics_index.py"  # noqa
 BODY_TEMPLATE = f"""This (automated) patch updates the list from metrics_index.py.
 
 For reviewers:
