@@ -12,6 +12,10 @@ import os
 import requests
 import sys
 
+DEFAULT_ORGANIZATION = "mozilla"
+DEFAULT_AUTHOR_NAME = "data-updater"
+DEFAULT_AUTHOR_EMAIL = "telemetry-alerts@mozilla.com"
+
 class UnmodifiedException(Exception):
     pass
 
@@ -111,7 +115,7 @@ if __name__ == "__main__":
 
     organization = os.getenv("GITHUB_REPOSITORY_OWNER") or DEFAULT_ORGANIZATION
 
-    repo = github.get_repo(f"{organization}/probe-scraper")
+    repo = github.get_repo(f"{organization}/test-repo")
 
     author_name = os.getenv("AUTHOR_NAME") or DEFAULT_AUTHOR_NAME
     author_email = os.getenv("AUTHOR_EMAIL") or DEFAULT_AUTHOR_EMAIL
