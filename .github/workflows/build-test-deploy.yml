@@ -55,7 +55,7 @@ jobs:
         echo "pr=$PR_NUMBER"
         echo "actor=$ACTOR"
 
-        permission=$(gh api /repos/mozilla/glean/collaborators/${ACTOR}/permission | jq -r .permission)
+        permission=$(gh api /repos/fnordig/test-repo/collaborators/${ACTOR}/permission | jq -r .permission)
         echo "permission=$permission"
         if [[ "$permission" = "admin" ]]; then
           true
@@ -64,7 +64,7 @@ jobs:
           exit 0
         fi
 
-        pr_info=$(gh api "/repos/mozilla/glean/pulls/${PR_NUMBER}")
+        pr_info=$(gh api "/repos/fnordig/test-repo/pulls/${PR_NUMBER}")
         pr_state=$(echo "$pr_info" | jq -r .state)
         if [[ "$pr_state" != "open" ]]; then
           echo "PR is not open. State: ${pr_state}. Stopping."
