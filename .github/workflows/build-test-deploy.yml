@@ -50,7 +50,7 @@ jobs:
             echo "Bailing out."
             exit 0
           fi
-        end
+        done
 
         echo "pr=$PR_NUMBER"
         echo "actor=$ACTOR"
