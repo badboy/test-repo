@@ -20,7 +20,13 @@ jobs:
 
     - name: Build
       run: |
-        exit 0
+        r=$(( $RANDOM % 10 ))
+        echo "$r
+        if [[ "$r" -lt 5 ]]; then
+          exit 0
+        else
+          exit 1
+        fi
 
   automerge:
     runs-on: ubuntu-latest
