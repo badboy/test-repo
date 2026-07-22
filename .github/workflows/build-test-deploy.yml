@@ -71,7 +71,7 @@ jobs:
             echo "$file was modified. Only repositories.txt changes are merged automatically."
             echo "Bailing out."
             gh pr comment "$PR_NUMBER" \
-              --body "[bot] Auto-merge aborted. '${file}' was modified. Only repositories.txt changes are merged automatically."
+              --body "Auto-merge aborted. '${file}' was modified. Only repositories.txt changes are merged automatically."
             exit 0
           fi
         done
@@ -94,5 +94,5 @@ jobs:
 
         echo "Tests succeeded. Merging this PR automatically."
         gh pr comment "$PR_NUMBER" \
-          --body "[bot] Tests succeeded. This PR will be automatically merged now."
+          --body "Tests succeeded. This PR will be automatically merged now."
         GH_TOKEN="$GH_PAT" gh pr merge --admin --rebase "$PR_NUMBER"
