@@ -21,3 +21,54 @@ jobs:
     - name: Build
       run: |
         exit 0
+
+    - name: Get changed files
+      if:
+        ${{
+          github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork != true
+        }}
+      id: changed-files
+      uses: tj-actions/changed-files@22103cc46bda19c2b464ffe86db46df6922fd323  # v47.0.5
+      with:
+        base_sha: ${{ github.event.pull_request.base.sha || github.event.before }}
+
+    - name: Auto-merge
+      if:
+        ${{
+          github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork != true
+        }}
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+        PR_NUMBER: ${{ github.event.issue.number }}
+        ACTOR: ${{ github.actor }}
+      run: |
+        set -x
+
+        for file in ${ALL_CHANGED_FILES}; do
+          if [[ "$file" != "repositories.txt" ]]; then
+            echo "$file was modified. Only repositories.txt changes are merged automatically."
+            echo "Bailing out."
+            exit 0
+          fi
+        end
+
+        echo "pr=$PR_NUMBER"
+        echo "actor=$ACTOR"
+
+        permission=$(gh api /repos/mozilla/glean/collaborators/${ACTOR}/permission | jq -r .permission)
+        echo "permission=$permission"
+        if [[ "$permission" = "admin" ]]; then
+          true
+        else
+          echo "Insufficient permission. Stopping."
+          exit 0
+        fi
+
+        pr_info=$(gh api "/repos/mozilla/glean/pulls/${PR_NUMBER}")
+        pr_state=$(echo "$pr_info" | jq -r .state)
+        if [[ "$pr_state" != "open" ]]; then
+          echo "PR is not open. State: ${pr_state}. Stopping."
+          exit 0
+        fi
+
+        GITHUB_TOKEN="$GH_PAT" gh pr merge --admin --rebase "$PR_NUMBER"
