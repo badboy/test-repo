@@ -119,3 +119,13 @@ jobs:
         ln -s "$(which python-zig)" "$(dirname "$(which python-zig)")/zig"
 
         maturin build --release --target aarch64-pc-windows-gnullvm --zig
+        ls -R target/wheels
+
+    - name: Run sample
+      shell: bash
+      run: |
+        cd samples/python
+        uv venv --seed --no-project venv
+        . ./venv/bin/activate
+        pip install ../../target/wheels/glean_sdk-69.0.0-py3-none-win_arm64.whl
+        python3 glean-sample/__main__.py
