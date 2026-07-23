@@ -110,6 +110,8 @@ jobs:
     - name: Build
       shell: bash
       run: |
+        set -x
+
         uv tool install git+https://github.com/PyO3/maturin
         uv tool install ziglang==0.15.2
         ln -s "$(which python-zig)" "$(dirname "$(which python-zig)")/zig"
