@@ -91,8 +91,8 @@ jobs:
           --body "Tests succeeded. This PR will be automatically merged now."
         GH_TOKEN="$GH_PAT" gh pr merge --admin --rebase "$PR_NUMBER"
 
-  windows:
-    runs-on: windows-11-arm
+  windows-build:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
@@ -123,14 +123,43 @@ jobs:
 
         unzip -l target/wheels/glean_sdk-69.0.0-py3-none-win_arm64.whl
 
+    - uses: actions/upload-artifact@v7
+      with:
+        path: target/wheels/*
+        name: wheels
+
+  windows:
+    runs-on: windows-11-arm
+    needs: windows-build
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      with:
+        persist-credentials: false
+        repository: "mozilla/glean"
+        ref: "update-to-use-zig-0.16-and-mat/pxrntszzmuwo"
+
+    - name: Setup Python
+      uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+
+    - uses: actions/download-artifact@v8
+      with:
+        name: wheels
+        path: target
+
     - name: Run sample
       shell: bash
       run: |
         set -x
+
+        ls -R target
+
         cd samples/python
         uv venv --seed --no-project venv
         . ./venv/Scripts/activate
-        pip install ../../target/wheels/glean_sdk-69.0.0-py3-none-win_arm64.whl
+        pip install ../../wheels/glean_sdk-69.0.0-py3-none-win_arm64.whl
         ls -R venv
 
         which python3
