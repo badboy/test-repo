@@ -170,3 +170,5 @@ jobs:
         cat venv/Lib/site-packages/glean/_uniffi/__init__.py || true
 
         ./venv/Scripts/python -c 'import sys; print(sys.path); import glean; print(glean.__file__)'
+
+        python3 glean-sample/__main__.py
