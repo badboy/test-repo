@@ -158,13 +158,10 @@ jobs:
       run: |
         set -x
 
-        ls -R target
-
         cd samples/python
         uv venv --seed --no-project venv
         . ./venv/Scripts/activate
         pip install ../../target/glean_sdk-69.0.0-py3-none-win_arm64.whl
-        ls -R venv
 
         which python3
         which python
