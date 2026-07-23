@@ -159,7 +159,7 @@ jobs:
         cd samples/python
         uv venv --seed --no-project venv
         . ./venv/Scripts/activate
-        pip install ../../wheels/glean_sdk-69.0.0-py3-none-win_arm64.whl
+        pip install ../../target/glean_sdk-69.0.0-py3-none-win_arm64.whl
         ls -R venv
 
         which python3
