@@ -126,6 +126,6 @@ jobs:
       run: |
         cd samples/python
         uv venv --seed --no-project venv
-        . ./venv/bin/activate
+        . ./venv/Scripts/activate
         pip install ../../target/wheels/glean_sdk-69.0.0-py3-none-win_arm64.whl
         python3 glean-sample/__main__.py
