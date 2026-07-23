@@ -114,7 +114,7 @@ jobs:
 
         cargo install \
           --git https://github.com/PyO3/maturin \
-          -p maturin \
+          maturin \
           --features zig
 
         uv tool install ziglang==0.16.0
