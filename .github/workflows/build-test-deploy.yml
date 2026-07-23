@@ -112,7 +112,10 @@ jobs:
       run: |
         set -x
 
-        cargo install --git https://github.com/PyO3/maturin --features zig
+        cargo install \
+          --git https://github.com/PyO3/maturin \
+          -p maturin \
+          --features zig
 
         uv tool install ziglang==0.16.0
         ln -s "$(which python-zig)" "$(dirname "$(which python-zig)")/zig"
