@@ -2,12 +2,21 @@ name: iroh-ssh
 
 on:
   workflow_dispatch:
+    inputs:
+      runs-on:
+        description: "The system to run on"
+        required: true
+        default: 'ubuntu-latest'
+        type: choice
+        options:
+          - ubuntu-latest
+          - macos-latest
 
 permissions: {}
 
 jobs:
   ssh:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
