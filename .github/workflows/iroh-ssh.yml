@@ -3,10 +3,16 @@ name: iroh-ssh
 on:
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   ssh:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: install iroh-ssh
