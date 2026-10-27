@@ -30,4 +30,4 @@ jobs:
 
       - name: run sshd
         run: |
-          which sshd
+          iroh-ssh server
