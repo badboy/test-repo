@@ -1,0 +1,26 @@
+name: iroh-ssh
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dtolnay/rust-toolchain@stable
+      - name: install iroh-ssh
+        run: |
+          cargo install iroh-ssh
+          iroh-ssh --version
+
+      - name: get keys
+        env:
+          ACTOR: ${{ github.actor }}
+        run: |
+          mkdir ~/.ssh
+          curl https://github.com/${ACTOR}.keys >> ~/.ssh/authorized_keys
+          cat ~/.ssh/authorized_keys
+
+      - name: run sshd
+        run: |
+          which sshd
