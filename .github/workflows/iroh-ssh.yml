@@ -12,7 +12,7 @@ jobs:
       - name: install iroh-ssh
         run: |
           cargo install iroh-ssh
-          iroh-ssh --version
+          iroh-ssh version
 
       - name: get keys
         env:
