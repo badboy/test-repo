@@ -33,7 +33,7 @@ jobs:
         env:
           ACTOR: ${{ github.actor }}
         run: |
-          mkdir ~/.ssh
+          mkdir -p ~/.ssh
           curl https://github.com/${ACTOR}.keys >> ~/.ssh/authorized_keys
           cat ~/.ssh/authorized_keys
 
